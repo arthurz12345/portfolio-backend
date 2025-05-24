@@ -22,7 +22,7 @@ public class imagesController : ControllerBase {
         return Ok(await _context.Images.ToListAsync());
     }
 
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     public async Task<ActionResult<Project>> GetImageById([FromRoute] int id)
     {
         Image? image = await _context.Images.FindAsync(id);
@@ -36,7 +36,7 @@ public class imagesController : ControllerBase {
         return Ok(imageDto);
     }
 
-    [HttpGet("project/{projectId}")]
+    [HttpGet("project/{projectId:int}")]
     public async Task<ActionResult<IEnumerable<Image>>> GetAllImagesForProject([FromRoute] int projectId){
         List<ImageDto> images = await _context.Images.Where(image => image.ProjectId == projectId).
         Select(image => new ImageDto{

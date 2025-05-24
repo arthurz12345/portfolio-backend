@@ -23,8 +23,8 @@ public class projectsController : ControllerBase
         return Ok(await _context.Projects.ToListAsync());
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Project>> GetProjectById([FromRoute] string id)
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<Project>> GetProjectById([FromRoute] int id)
     {
         Project? project = await _context.Projects.FindAsync(id);
 
@@ -49,7 +49,7 @@ public class projectsController : ControllerBase
     }
 
     [HttpPut]
-    [Route("{id}")]
+    [Route("{id:int}")]
     public async Task<IActionResult> UpdateProject([FromRoute] int id, [FromBody] UpdateProjectDto updateDto)
     {
         var projectModel = await _context.Projects.FirstOrDefaultAsync(x => x.Id == id);
