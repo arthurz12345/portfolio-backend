@@ -1,4 +1,6 @@
 
+using Portfolio.Models;
+
 namespace Portfolio.Dto
 {
 

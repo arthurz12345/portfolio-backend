@@ -3,6 +3,7 @@ using Portfolio.Data;
 using Portfolio.Models;
 using Portfolio.Dto;
 using Portfolio.Mappers;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -36,10 +37,11 @@ public class imagesController : ControllerBase {
         return Ok(imageDto);
     }
 
-    [HttpGet("project/{projectId:int}")]
+    [HttpGet("project/{project:int}")]
     public async Task<ActionResult<IEnumerable<Image>>> GetAllImagesForProject([FromRoute] int projectId){
-        List<ImageDto> images = await _context.Images.Where(image => image.ProjectId == projectId).
-        Select(image => new ImageDto{
+        List<ImageDto> images = await _context.Images
+        .Where(image => image.ProjectId == projectId)
+        .Select(image => new ImageDto{
             Id = image.Id,
             ProjectId = image.ProjectId,
             Position = image.Position,
@@ -56,11 +58,15 @@ public class imagesController : ControllerBase {
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateImage([FromBody] CreateImageDto imageDto){
-        Image imageModel = imageDto.fromDtoToImage();
-        await _context.Images.AddAsync(imageModel);
+    public async Task<IActionResult> CreateImage([FromBody] MultipleImageDto imageDto){
+        List<Image> allNewImages = imageDto.images
+            .Select(image => ImageMappers.fromDtoToImage(image))
+            .ToList();
+        await _context.Images.AddRangeAsync(allNewImages);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetImageById), new { id = imageModel.Id }, imageModel.toImageDto());
+        var dtos = allNewImages.Select(i => i.toImageDto()).ToList();
+        return CreatedAtAction(nameof(GetImageById), new { id = dtos.First().Id }, dtos);
+
     }
 
 

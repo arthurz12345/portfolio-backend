@@ -21,7 +21,7 @@ namespace Portfolio.Mappers
                 Url = project.Url,
                 DisplayImage = project.DisplayImage,
                 LongDescription = project.LongDescription,
-                Summary = project.Summary
+                Summary = project.Summary,
             };
         }
 
@@ -37,7 +37,7 @@ namespace Portfolio.Mappers
                 Url = projectDto.Url,
                 DisplayImage = projectDto.DisplayImage,
                 LongDescription = projectDto.LongDescription,
-                Summary = projectDto.Summary
+                Summary = projectDto.Summary,
             };
         }
     }

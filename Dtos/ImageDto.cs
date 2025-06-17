@@ -1,3 +1,5 @@
+using Portfolio.Models;
+
 namespace Portfolio.Dto
 {
 
@@ -18,5 +20,9 @@ namespace Portfolio.Dto
 
     public class UpdateImageDto{
         public required int Position { get; set; }
+    }
+
+    public class MultipleImageDto{
+        public required List<CreateImageDto> images { get; set; }
     }
 }

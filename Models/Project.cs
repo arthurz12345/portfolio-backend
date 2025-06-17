@@ -9,7 +9,6 @@ namespace Portfolio.Models
         public required string Format { get; set; }
         public required string Location { get; set; }
         public required string Url { get; set; }
-
         public required string DisplayImage { get; set; }
         public required string Summary { get; set; }
         public required string LongDescription { get; set; }
