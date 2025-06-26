@@ -8,6 +8,6 @@ namespace Portfolio.Data
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Image> Images { get; set; }
+        public DbSet<ProjectImage> ProjectImages { get; set; }
     }
 }

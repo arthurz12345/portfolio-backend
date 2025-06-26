@@ -1,6 +1,6 @@
 namespace Portfolio.Models
 {
-    public class Image
+    public class ProjectImage
     {
         public int Id { get; set; }
         public required int ProjectId { get; set; }

@@ -7,11 +7,23 @@ namespace Portfolio.Mappers
     public static class ProjectMappers
     {
 
-        public static ProjectDto toProjectDto(this Project project)
-        {
+        public static CreateProjectDto ToCreateProjectDto(this Project project, List<NewProjectImageDto> images){
+            return new CreateProjectDto{
+                Title = project.Title,
+                Date = project.Date,
+                Year = project.Year,
+                Format = project.Format,
+                Location = project.Location,
+                Url = project.Url,
+                DisplayImage = project.DisplayImage,
+                LongDescription = project.LongDescription,
+                Summary = project.Summary,
+                Images = images
+            };
+        }
 
-            return new ProjectDto
-            {
+        public static GetProjectDto ToGetProjectDto(this Project project, List<ProjectImage> images){
+            return new GetProjectDto{
                 Id = project.Id,
                 Title = project.Title,
                 Date = project.Date,
@@ -22,23 +34,23 @@ namespace Portfolio.Mappers
                 DisplayImage = project.DisplayImage,
                 LongDescription = project.LongDescription,
                 Summary = project.Summary,
+                Images = images
             };
         }
 
-        public static Project fromDtoToProject(this CreateProjectDto projectDto)
-        {
-            return new Project
-            {
-                Title = projectDto.Title,
-                Date = projectDto.Date,
-                Year = projectDto.Year,
-                Format = projectDto.Format,
-                Location = projectDto.Location,
-                Url = projectDto.Url,
-                DisplayImage = projectDto.DisplayImage,
-                LongDescription = projectDto.LongDescription,
-                Summary = projectDto.Summary,
+        public static Project FromCreateDtoToProject(this CreateProjectDto createProjectDto){
+            return new Project{
+                Title = createProjectDto.Title,
+                Date = createProjectDto.Date,
+                Year = createProjectDto.Year,
+                Format = createProjectDto.Format,
+                Location = createProjectDto.Location,
+                Url = createProjectDto.Url,
+                DisplayImage = createProjectDto.DisplayImage,
+                LongDescription = createProjectDto.LongDescription,
+                Summary = createProjectDto.Summary,
             };
         }
+   
     }
 }

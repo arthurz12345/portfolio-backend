@@ -12,5 +12,6 @@ namespace Portfolio.Models
         public required string DisplayImage { get; set; }
         public required string Summary { get; set; }
         public required string LongDescription { get; set; }
+        public List<ProjectImage> ProjectImages { get; set; }
     }
 }

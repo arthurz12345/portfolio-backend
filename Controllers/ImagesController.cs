@@ -20,13 +20,13 @@ public class imagesController : ControllerBase {
 
     [HttpGet]
     public async Task<IActionResult> GetImages(){
-        return Ok(await _context.Images.ToListAsync());
+        return Ok(await _context.ProjectImages.ToListAsync());
     }
 
     [HttpGet("{id:int}")]
     public async Task<ActionResult<Project>> GetImageById([FromRoute] int id)
     {
-        Image? image = await _context.Images.FindAsync(id);
+        ProjectImage? image = await _context.ProjectImages.FindAsync(id);
 
         if (image == null)
         {
@@ -38,8 +38,8 @@ public class imagesController : ControllerBase {
     }
 
     [HttpGet("project/{project:int}")]
-    public async Task<ActionResult<IEnumerable<Image>>> GetAllImagesForProject([FromRoute] int projectId){
-        List<ImageDto> images = await _context.Images
+    public async Task<ActionResult<IEnumerable<ProjectImage>>> GetAllImagesForProject([FromRoute] int projectId){
+        List<ImageDto> images = await _context.ProjectImages
         .Where(image => image.ProjectId == projectId)
         .Select(image => new ImageDto{
             Id = image.Id,
@@ -59,10 +59,10 @@ public class imagesController : ControllerBase {
 
     [HttpPost]
     public async Task<IActionResult> CreateImage([FromBody] MultipleImageDto imageDto){
-        List<Image> allNewImages = imageDto.images
-            .Select(image => ImageMappers.fromDtoToImage(image))
+        List<ProjectImage> allNewImages = imageDto.images
+            .Select(image => ImageMappers.fromCreateDtoToImage(image))
             .ToList();
-        await _context.Images.AddRangeAsync(allNewImages);
+        await _context.ProjectImages.AddRangeAsync(allNewImages);
         await _context.SaveChangesAsync();
         var dtos = allNewImages.Select(i => i.toImageDto()).ToList();
         return CreatedAtAction(nameof(GetImageById), new { id = dtos.First().Id }, dtos);
